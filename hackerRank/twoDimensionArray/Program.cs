@@ -27,15 +27,22 @@ namespace twoDimensionArray
     public static int hourglassSum(List<List<int>> arr)
     {
         int highest = 0;
+        int sum = 0;
         for(int x = 0; x < arr.Count - 2; x++)
         {
             for(int y = 0; y <arr[x].Count - 2; y++)
             {
-                int sum = arr[x][y] + arr[x][y+1] + arr[x][y+2] + arr[x+1][y+1] + arr[x+2][y] + arr[x+2][y+1] + arr[x+2][y+2];
-                if(sum>highest)
-                {
+                //add up values in hour glass shape
+                sum = arr[x][y] + arr[x][y+1] + arr[x][y+2]; //first line of hourglass
+                sum += arr[x+1][y+1]; //middle
+                sum += arr[x+2][y] + arr[x+2][y+1] + arr[x+2][y+2]; //bottom line
+
+                //set highest to sum if first hourglass
+                if (x == 0 && y == 0) 
                     highest = sum;
-                }
+                //compare sums and set highest if sum is higher
+                if(sum>highest)
+                    highest = sum;
             }
         }
         return highest;
@@ -47,7 +54,6 @@ namespace twoDimensionArray
     public static void Main(string[] args)
     {
         List<List<int>> arr = new List<List<int>>();
-
         for (int i = 0; i < 6; i++)
         {
             arr.Add(Console.ReadLine().TrimEnd().Split(' ').ToList().Select(arrTemp => Convert.ToInt32(arrTemp)).ToList());

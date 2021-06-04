@@ -2,12 +2,12 @@ namespace RockPaperScissors1
 {
     public class PlayerDerivedClass : PersonBaseClass
     {
-        private int myAge;
-        public string Street;
-        public string State;
-        public string City;
-        public int Wins;
-        public int Choice;
+        private int myAge { get; set; }
+        public string Street { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public int Wins { get; set; }
+        public int Choice { get; set; }
 
         public int MyAge { get; set; }
         //overload constructors
