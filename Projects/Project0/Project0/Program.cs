@@ -18,6 +18,7 @@ namespace Project0
             CustomerMethods custMethods = new CustomerMethods();
             OrderMethods orderMethods = new OrderMethods();
             Display display = new Display();
+
             do // quit loop
             {
                 Console.WriteLine("Welcome!\nPlease choose a selection:\n1. login \n2. exit program");
@@ -199,7 +200,7 @@ namespace Project0
                                     {
                                         int id = orderMethods.PlaceOrder(custMethods.GetCurrentStore().StoreId , custMethods.GetCurrentCustomer().CustomerId);
                                         if (id == 0)
-                                            Console.WriteLine("Something went wrong in the order."); //split cart check and count check between functions
+                                            Console.WriteLine("Something went wrong in the order.");
                                         else
                                             Console.WriteLine(display.DisplayOrderDetails(id));
                                     }
