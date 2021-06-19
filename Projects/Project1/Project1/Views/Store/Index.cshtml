@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Project1DbContext.Store>
+
+@{
+    ViewData["Title"] = "Stores";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Stores index page</h1>
+    <p>store links</p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        <a asp-action="History" asp-route-id="@item.Id">Store order history</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Details">Details</a>
+<a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="History">Store order history</a>
