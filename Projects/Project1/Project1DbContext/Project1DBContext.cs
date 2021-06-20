@@ -8,14 +8,8 @@ namespace Project1DbContext
 {
     public partial class Project1DBContext : DbContext
     {
-        public Project1DBContext()
-        {
-        }
-
-        public Project1DBContext(DbContextOptions<Project1DBContext> options)
-            : base(options)
-        {
-        }
+        public Project1DBContext() { }
+        public Project1DBContext(DbContextOptions options) : base(options) { }
 
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Inventory> Inventories { get; set; }
@@ -23,11 +17,15 @@ namespace Project1DbContext
         public virtual DbSet<OrderLine> OrderLines { get; set; }
         public virtual DbSet<PreferredStore> PreferredStores { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductPicture> ProductPictures { get; set; }
         public virtual DbSet<Store> Stores { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Project1DB;Trusted_Connection=True;");
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +35,9 @@ namespace Project1DbContext
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.ToTable("customer");
+
+                entity.HasIndex(e => e.Username, "UQ__customer__F3DBC5721B108432")
+                    .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -182,6 +183,37 @@ namespace Project1DbContext
                 entity.Property(e => e.Price)
                     .HasColumnType("money")
                     .HasColumnName("price");
+            });
+
+            modelBuilder.Entity<ProductPicture>(entity =>
+            {
+                entity.ToTable("product_picture");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AltText)
+                    .HasMaxLength(100)
+                    .HasColumnName("alt_text");
+
+                entity.Property(e => e.LargePath)
+                    .HasMaxLength(100)
+                    .HasColumnName("large_path");
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.SmallPath)
+                    .HasMaxLength(100)
+                    .HasColumnName("small_path");
+
+                entity.Property(e => e.TitleText)
+                    .HasMaxLength(100)
+                    .HasColumnName("title_text");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductPictures)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__product_p__produ__6FE99F9F");
             });
 
             modelBuilder.Entity<Store>(entity =>

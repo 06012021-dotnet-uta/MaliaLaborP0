@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Project1DbContext;
+using Domain;
 
 namespace Project1
 {
@@ -33,6 +34,7 @@ namespace Project1
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 }
             });
+            services.AddScoped<ProductHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

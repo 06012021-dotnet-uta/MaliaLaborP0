@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -12,16 +11,16 @@ namespace Project1DbContext
         {
             Inventories = new HashSet<Inventory>();
             OrderLines = new HashSet<OrderLine>();
+            ProductPictures = new HashSet<ProductPicture>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-
-        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
         public string Description { get; set; }
 
         public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual ICollection<OrderLine> OrderLines { get; set; }
+        public virtual ICollection<ProductPicture> ProductPictures { get; set; }
     }
 }
